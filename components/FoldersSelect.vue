@@ -41,21 +41,18 @@ import foldersApi from "~/repositories/folders/FoldersApi";
 import authService from "~/services/AuthService";
 import FolderTree from "~/repositories/folders/FolderTree";
 import Folder from "~/repositories/folders/Folder";
+import Vue, {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
 
   props: {
     value: {
-      type: Folder | undefined
     },
     preSelectedFolderId: {
-      type: Number | String
     },
     label: {
-      type: String
     },
     allowEmpty: {
-      type: Boolean,
       default: true
     }
   },
@@ -97,16 +94,14 @@ export default {
       }
     },
 
-    getFolderTreeToRoot(folder?: FolderTree, treeItems?: FolderTree): FolderTree[] {
-      if (!treeItems) {
-        treeItems = [];
-      }
+    getFolderTreeToRoot(folder?: FolderTree, treeItems?: FolderTree[]): FolderTree[] {
+      let treeItemsInit: FolderTree[] = treeItems ? [...treeItems] : [];
 
-      if (!folder) return treeItems;
+      if (!folder) return treeItemsInit;
 
-      treeItems.push(folder);
+      treeItemsInit.push(folder);
 
-      return this.getFolderTreeToRoot(folder.parent, treeItems);
+      return this.getFolderTreeToRoot(folder.parent, treeItemsInit);
     },
 
     getFolderTreeName(folder: FolderTree) {
@@ -126,5 +121,5 @@ export default {
     this.fetchParentSelectItems();
   }
 
-}
+})
 </script>

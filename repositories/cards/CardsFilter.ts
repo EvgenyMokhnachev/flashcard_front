@@ -1,9 +1,9 @@
 export default class CardsFilter {
-  ids?: number[];
-  userIds?: number[];
-  folderIds?: number[];
+  ids?: number[] | undefined[];
+  userIds?: number[] | undefined[];
+  folderIds?: number[] | undefined[];
 
-  constructor(cardsFilter: CardsFilter) {
+  constructor(cardsFilter?: CardsFilter) {
     this.ids = cardsFilter?.ids;
     this.userIds = cardsFilter?.userIds;
     this.folderIds = cardsFilter?.folderIds;

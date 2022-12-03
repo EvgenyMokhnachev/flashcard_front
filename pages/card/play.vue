@@ -52,8 +52,11 @@
 import cardsApi from "~/repositories/cards/CardsApi";
 import CardsFilter from "~/repositories/cards/CardsFilter";
 import DialogYesNot from "~/components/DialogYesNot.vue";
+import Vue from "vue";
 
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
 
   components: {DialogYesNot},
 
@@ -68,7 +71,7 @@ export default {
   },
 
   computed: {
-    cardsFilterFromUri(): CartsFilter | undefined {
+    cardsFilterFromUri(): CardsFilter | undefined {
       if (!this.$route.query || !this.$route.query.filter) {
         return;
       }
@@ -119,5 +122,5 @@ export default {
     this.fetchCards(this.cardsFilterFromUri);
   }
 
-}
+})
 </script>

@@ -11,22 +11,26 @@
     <div class="d-flex justify-space-between align-center">
       <v-card-subtitle class="pa-2 pt-0"><strong>{{ currentFolder.name }}</strong></v-card-subtitle>
       <div>
-        <v-btn icon :to="'/folders/update/' + currentFolder.id"><v-icon>mdi-folder-edit</v-icon></v-btn>
+        <v-btn icon :to="'/folders/update/' + currentFolder.id">
+          <v-icon>mdi-folder-edit</v-icon>
+        </v-btn>
       </div>
     </div>
 
-    <v-divider class="mb-4" />
+    <v-divider class="mb-4"/>
 
     <v-card elevation="2" class="mb-4" :to="'/folders/create?parentId=' + getCurrentFolderId()">
       <v-card-text class="d-flex align-center pa-2">
-        <div><v-icon class="mr-2">mdi-folder-plus</v-icon></div>
+        <div>
+          <v-icon class="mr-2">mdi-folder-plus</v-icon>
+        </div>
         <div>Создать подраздел</div>
       </v-card-text>
     </v-card>
 
-    <FoldersList :filter="foldersFilter" />
+    <FoldersList :filter="foldersFilter"/>
 
-    <v-divider class="mb-4" />
+    <v-divider class="mb-4"/>
 
     <div class="d-flex justify-space-around mb-4">
       <v-btn elevation="1" large fab dark color="teal" :to="'/card/create?folderId=' + getCurrentFolderId()">
@@ -38,7 +42,7 @@
       </v-btn>
     </div>
 
-    <CardsList :filter="cardsFilter" />
+    <CardsList :filter="cardsFilter"/>
   </div>
 </template>
 
@@ -50,8 +54,11 @@ import FoldersList from "~/components/FoldersList.vue";
 import FoldersFilter from "~/repositories/folders/FoldersFilter";
 import foldersApi from "~/repositories/folders/FoldersApi";
 import FolderTree from "~/repositories/folders/FolderTree";
+import Vue from "vue";
 
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
   components: {
     FoldersList,
     CardsList
@@ -59,14 +66,8 @@ export default {
 
   data() {
     return {
-      cardsFilter: new CardsFilter({
-        userIds: [authService.getUserId()],
-        folderIds: [this.getCurrentFolderId()]
-      }),
-      foldersFilter: new FoldersFilter({
-        userIds: [authService.getUserId()],
-        parentIds: [this.getCurrentFolderId()]
-      }),
+      cardsFilter: new CardsFilter(),
+      foldersFilter: new FoldersFilter(),
       currentFolder: new FolderTree()
     }
   },
@@ -87,20 +88,21 @@ export default {
   },
 
   methods: {
-    getFolderTreeToRoot(folder?: FolderTree, treeItems?: FolderTree): FolderTree[] {
-      if (!treeItems) {
-        treeItems = [];
-      }
+    getFolderTreeToRoot(folder?: FolderTree, treeItems?: FolderTree[]): FolderTree[] {
+      let treeItemsInit: FolderTree[] = treeItems ? [...treeItems] : [];
 
-      if (!folder) return treeItems;
+      if (!folder) return treeItemsInit;
 
-      treeItems.push(folder);
+      treeItemsInit.push(folder);
 
-      return this.getFolderTreeToRoot(folder.parent, treeItems);
+      return this.getFolderTreeToRoot(folder.parent, treeItemsInit);
     },
 
-    getCurrentFolderId() {
-      return this.$route.params.folderId;
+    getCurrentFolderId(): number | undefined {
+      if (this.$route.params.folderId) {
+        return parseInt(this.$route.params.folderId);
+      }
+      return;
     },
 
     onClickCardPlay() {
@@ -116,12 +118,14 @@ export default {
     },
 
     async fetchCurrentFolder() {
-      let currentFolder: FolderTree = (await foldersApi.tree({
-        ids: [this.getCurrentFolderId()]
-      })).first();
+      if (this.getCurrentFolderId() !== undefined) {
+        let currentFolder: FolderTree | undefined = (await foldersApi.tree({
+          ids: [this.getCurrentFolderId()]
+        })).first();
 
-      if (currentFolder) {
-        this.currentFolder = currentFolder;
+        if (currentFolder) {
+          this.currentFolder = currentFolder;
+        }
       }
     }
   },
@@ -133,8 +137,17 @@ export default {
   },
 
   mounted() {
+    this.cardsFilter = new CardsFilter({
+      userIds: [authService.getUserId()],
+      folderIds: [this.getCurrentFolderId()]
+    });
+    this.foldersFilter = new FoldersFilter({
+      userIds: [authService.getUserId()],
+      parentIds: [this.getCurrentFolderId()]
+    });
+    this.currentFolder = new FolderTree();
     this.fetchCurrentFolder();
   }
 
-}
+})
 </script>

@@ -20,7 +20,11 @@
 </template>
 
 <script lang="ts">
-export default {
+import Vue from "vue";
+
+import {defineComponent} from "vue";
+
+export default defineComponent({
 
   props: {
     opened: {
@@ -53,5 +57,5 @@ export default {
     }
   }
 
-}
+})
 </script>

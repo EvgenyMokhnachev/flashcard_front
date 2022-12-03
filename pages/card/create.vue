@@ -15,8 +15,11 @@
 import cardsApi from "../../repositories/cards/CardsApi";
 import FoldersSelect from "../../components/FoldersSelect";
 import CardManage from "../../components/CardManage";
+import Vue from "vue";
 
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
 
   components: {
     CardManage,
@@ -55,5 +58,5 @@ export default {
     }
   }
 
-}
+})
 </script>

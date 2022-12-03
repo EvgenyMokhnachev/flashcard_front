@@ -34,8 +34,11 @@ import foldersApi from "~/repositories/folders/FoldersApi";
 import FolderTree from "~/repositories/folders/FolderTree";
 import FolderManage from "~/components/FolderManage.vue";
 import DialogYesNot from "~/components/DialogYesNot.vue";
+import Vue from "vue";
 
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
   components: {
     DialogYesNot,
     FolderManage,
@@ -50,17 +53,22 @@ export default {
   },
 
   methods: {
-    getCurrentFolderId() {
-      return this.$route.params.folderId;
+    getCurrentFolderId(): number | undefined {
+      if (this.$route.params.folderId) {
+        return parseInt(this.$route.params.folderId);
+      }
+      return;
     },
 
     async fetchCurrentFolder() {
-      let currentFolder: FolderTree = (await foldersApi.tree({
-        ids: [this.getCurrentFolderId()]
-      })).first();
+      if (this.getCurrentFolderId() !== undefined) {
+        let currentFolder: FolderTree | undefined = (await foldersApi.tree({
+          ids: [this.getCurrentFolderId()]
+        })).first();
 
-      if (currentFolder) {
-        this.currentFolder = currentFolder;
+        if (currentFolder) {
+          this.currentFolder = currentFolder;
+        }
       }
     },
 
@@ -94,5 +102,5 @@ export default {
     this.fetchCurrentFolder();
   }
 
-}
+})
 </script>

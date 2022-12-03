@@ -31,8 +31,11 @@ import foldersApi from "~/repositories/folders/FoldersApi";
 import FolderCreateRequest from "~/repositories/folders/FolderCreateRequest";
 import FoldersSelect from "~/components/FoldersSelect.vue";
 import FolderManage from "~/components/FolderManage.vue";
+import Vue from "vue";
 
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
   components: {
     FolderManage,
     FoldersSelect
@@ -54,7 +57,7 @@ export default {
       try {
         const folder = await foldersApi.create(new FolderCreateRequest({
           name: this.folderName,
-          parentId: this.parentFolder?.id
+          parentId: this.parentFolder && this.parentFolder.id ? this.parentFolder.id : undefined
         }));
         this.$router.push("/folders/" + folder.id);
       } catch (e) {
@@ -68,5 +71,5 @@ export default {
     },
   },
 
-}
+})
 </script>

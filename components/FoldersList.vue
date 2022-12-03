@@ -16,8 +16,9 @@
 <script lang="ts">
 import FoldersFilter from "~/repositories/folders/FoldersFilter";
 import foldersApi from "~/repositories/folders/FoldersApi";
+import Vue, {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
 
   props: {
     filter: {
@@ -53,5 +54,5 @@ export default {
     this.fetchItems();
   }
 
-}
+})
 </script>

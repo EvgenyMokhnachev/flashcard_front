@@ -31,8 +31,9 @@
 <script>
 import FoldersSelect from "../components/FoldersSelect";
 import Folder from "../repositories/folders/Folder";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   components: {
     FoldersSelect
 
@@ -89,5 +90,5 @@ export default {
     },
   }
 
-}
+})
 </script>

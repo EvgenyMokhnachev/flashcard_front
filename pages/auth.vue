@@ -17,10 +17,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import authService from "../services/AuthService";
+import Vue from "vue";
 
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
   layout: 'auth',
 
   middleware: ['auth'],
@@ -48,5 +51,5 @@ export default {
     }
   }
 
-}
+})
 </script>

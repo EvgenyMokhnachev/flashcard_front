@@ -21,18 +21,21 @@
 </template>
 
 <script lang="ts">
-import cardsApi from "../../../repositories/cards/CardsApi";
-import FoldersSelect from "../../../components/FoldersSelect";
-import CardManage from "../../../components/CardManage";
+import cardsApi from "./../../../repositories/cards/CardsApi";
+import FoldersSelect from "./../../../components/FoldersSelect.vue";
+import CardManage from "./../../../components/CardManage.vue";
+import DialogYesNot from "./../../../components/DialogYesNot.vue";
 import Card from "~/repositories/cards/Card";
-import DialogYesNot from "~/components/DialogYesNot.vue";
+import Vue from "vue";
 
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
 
   components: {
-    DialogYesNot,
+    FoldersSelect,
     CardManage,
-    FoldersSelect
+    DialogYesNot,
 
   },
 
@@ -80,5 +83,5 @@ export default {
     this.fetchCardData();
   }
 
-}
+})
 </script>

@@ -5,7 +5,11 @@
 </template>
 
 <script lang="ts">
-export default {
+import Vue from "vue";
+
+import {defineComponent} from "vue";
+
+export default defineComponent({
   components: {
 
   },
@@ -28,5 +32,5 @@ export default {
 
   }
 
-}
+})
 </script>

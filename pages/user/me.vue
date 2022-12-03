@@ -15,8 +15,11 @@
 <script lang="ts">
 import authService from "~/services/AuthService";
 import User from "~/repositories/user/User";
+import Vue from "vue";
 
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
   components: {
 
   },
@@ -44,5 +47,5 @@ export default {
     this.fetchUserMe();
   }
 
-}
+})
 </script>

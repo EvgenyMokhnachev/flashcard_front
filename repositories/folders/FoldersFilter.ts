@@ -1,7 +1,7 @@
 export default class FoldersFilter {
-  ids?: number[];
-  parentIds?: number[];
-  userIds?: number[];
+  ids?: number[] | undefined[];
+  parentIds?: number[] | undefined[];
+  userIds?: number[] | undefined[];
   onlyRoot?: boolean;
 
   constructor(filter?: FoldersFilter) {

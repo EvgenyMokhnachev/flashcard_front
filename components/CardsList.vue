@@ -15,8 +15,11 @@
 <script lang="ts">
 import cardsApi from "../repositories/cards/CardsApi";
 import CardsFilter from "../repositories/cards/CardsFilter";
+import Vue from "vue";
 
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
 
   props: {
     filter: {
@@ -46,5 +49,5 @@ export default {
     this.fetchCards();
   }
 
-}
+})
 </script>
