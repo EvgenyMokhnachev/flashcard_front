@@ -24,8 +24,7 @@ export default defineComponent({
   props: {
     filter: {
       type: CardsFilter,
-      required: true,
-      default: {}
+      required: false
     },
   },
 
@@ -38,15 +37,22 @@ export default defineComponent({
     }
   },
 
+  watch: {
+    filter(newVal) {
+      this.fetchItems();
+    }
+  },
+
   methods: {
-    async fetchCards() {
+    async fetchItems() {
+      if (!this.filter) return;
       let cardPaginationResponse = await cardsApi.get(this.filter);
       this.cards = cardPaginationResponse.items;
     }
   },
 
   async mounted() {
-    this.fetchCards();
+    this.fetchItems();
   }
 
 })

@@ -9,9 +9,9 @@
     </v-breadcrumbs>
 
     <div class="d-flex justify-space-between align-center">
-      <v-card-subtitle class="pa-2 pt-0"><strong>{{ currentFolder.name }}</strong></v-card-subtitle>
+      <v-card-subtitle class="pa-2 pt-0"><strong>{{ (currentFolder ? currentFolder.name : '') }}</strong></v-card-subtitle>
       <div>
-        <v-btn icon :to="'/folders/update/' + currentFolder.id">
+        <v-btn icon :to="'/folders/update/' + (currentFolder ? currentFolder.id : '')">
           <v-icon>mdi-folder-edit</v-icon>
         </v-btn>
       </div>
@@ -66,9 +66,9 @@ export default defineComponent({
 
   data() {
     return {
-      cardsFilter: new CardsFilter(),
-      foldersFilter: new FoldersFilter(),
-      currentFolder: new FolderTree()
+      cardsFilter: undefined,
+      foldersFilter: undefined,
+      currentFolder: undefined
     }
   },
 
@@ -145,7 +145,6 @@ export default defineComponent({
       userIds: [authService.getUserId()],
       parentIds: [this.getCurrentFolderId()]
     });
-    this.currentFolder = new FolderTree();
     this.fetchCurrentFolder();
   }
 

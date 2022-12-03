@@ -23,8 +23,7 @@ export default defineComponent({
   props: {
     filter: {
       type: FoldersFilter,
-      required: true,
-      default: {}
+      required: false
     },
   },
 
@@ -37,8 +36,15 @@ export default defineComponent({
     }
   },
 
+  watch: {
+    filter(newVal) {
+      this.fetchItems();
+    }
+  },
+
   methods: {
     async fetchItems() {
+      if (!this.filter) return;
       let itemsPagination = await foldersApi.get(this.filter);
       this.items = itemsPagination.items;
     }
