@@ -7,7 +7,7 @@ import PaginationResponse from "~/repositories/PaginationResponse";
 class CardsApi extends BaseApiRepository {
 
   public async get(filter?: CardsFilter): Promise<PaginationResponse<Card>> {
-    return await this.POST("http://localhost:3000/cards/get", filter);
+    return await this.POST("https://api-flashcards.mokhnachev.org/cards/get", filter);
   }
 
   public async getFirst(filter?: CardsFilter): Promise<Card | undefined> {
@@ -22,15 +22,15 @@ class CardsApi extends BaseApiRepository {
   }
 
   public async create(cardCreateData: CardCreateRequest): Promise<Card> {
-    return await this.POST("http://localhost:3000/cards/create", cardCreateData);
+    return await this.POST("https://api-flashcards.mokhnachev.org/cards/create", cardCreateData);
   }
 
   public async update(card: Card): Promise<Card> {
-    return await this.POST("http://localhost:3000/cards/update", card);
+    return await this.POST("https://api-flashcards.mokhnachev.org/cards/update", card);
   }
 
   public async delete(id: number): Promise<undefined> {
-    return await this.POST("http://localhost:3000/cards/delete", {id});
+    return await this.POST("https://api-flashcards.mokhnachev.org/cards/delete", {id});
   }
 
 }

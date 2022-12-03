@@ -6,7 +6,7 @@ import User from "~/repositories/user/User";
 class UsersApi extends BaseApiRepository {
 
   public async get(filter?: UsersFilter): Promise<PaginationResponse<User>> {
-    return await this.POST("http://localhost:3000/users/get", filter);
+    return await this.POST("https://api-flashcards.mokhnachev.org/users/get", filter);
   }
 
   public async getFirst(filter?: UsersFilter): Promise<User | undefined> {

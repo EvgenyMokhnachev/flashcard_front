@@ -18,16 +18,16 @@ class FoldersApi extends BaseApiRepository {
   }
 
   public async get(filter?: FoldersFilter): Promise<PaginationResponse<Folder>> {
-    return new PaginationResponse(await this.POST("http://localhost:3000/folders/get", filter));
+    return new PaginationResponse(await this.POST("https://api-flashcards.mokhnachev.org/folders/get", filter));
   }
 
   public async tree(filter?: FoldersFilter): Promise<PaginationResponse<FolderTree>> {
-    return new PaginationResponse(await this.POST("http://localhost:3000/folders/get/tree", filter));
+    return new PaginationResponse(await this.POST("https://api-flashcards.mokhnachev.org/folders/get/tree", filter));
   }
 
   public async create(createData: FolderCreateRequest): Promise<Folder> {
     try {
-      let result = await this.POST("http://localhost:3000/folders/create", createData);
+      let result = await this.POST("https://api-flashcards.mokhnachev.org/folders/create", createData);
       this.doFoldersCRUDCallbacks();
       return result;
     } catch (e) {
@@ -37,7 +37,7 @@ class FoldersApi extends BaseApiRepository {
 
   public async delete(id?: number): Promise<boolean> {
     try {
-      let result = await this.POST("http://localhost:3000/folders/delete", {folderId: id});
+      let result = await this.POST("https://api-flashcards.mokhnachev.org/folders/delete", {folderId: id});
       this.doFoldersCRUDCallbacks();
       return result.success;
     } catch (e) {
@@ -47,7 +47,7 @@ class FoldersApi extends BaseApiRepository {
 
   public async update(folder: Folder): Promise<Folder> {
     try {
-      let result = await this.POST("http://localhost:3000/folders/update", folder);
+      let result = await this.POST("https://api-flashcards.mokhnachev.org/folders/update", folder);
       this.doFoldersCRUDCallbacks();
       return result;
     } catch (e) {
