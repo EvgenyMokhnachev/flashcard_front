@@ -73,8 +73,8 @@ export default defineComponent({
     },
 
     onClickBack() {
-      if (this.currentFolder && this.currentFolder.parentId) {
-        this.$router.push("/folders/" + this.currentFolder.parentId)
+      if (this.currentFolder && this.currentFolder.id) {
+        this.$router.push("/folders/" + this.currentFolder.id)
       } else {
         this.$router.back();
       }
