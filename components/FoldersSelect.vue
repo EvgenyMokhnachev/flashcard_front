@@ -1,5 +1,5 @@
 <template>
-  <v-select :label="label || 'Родительский раздел'" :items="items" v-model="selectedItem" item-value="id" return-object>
+  <v-select dense hide-details :label="label || 'Родительский раздел'" :items="items" v-model="selectedItem" item-value="id" return-object>
     <template slot="item" slot-scope="data">
       <div class="parent_folder_select_item">
         <div class="parent_tree_name" v-if="getFolderTreeName(data.item)">

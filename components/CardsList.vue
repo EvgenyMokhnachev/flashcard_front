@@ -3,13 +3,17 @@
 <!--    <div>Cards list</div>-->
 <!--    <div>Folder: {{folder}}</div>-->
     <v-card class="mb-4" v-for="(card, i) in cards" :key="i" :to="'/card/update/' + card.id">
-      <v-card-title style="white-space: pre-wrap;">{{card.frontSide}}</v-card-title>
+      <v-card-text style="white-space: pre-wrap;" v-html="card.frontSide" class="card_data" />
     </v-card>
   </div>
 </template>
 
-<style>
-
+<style lang="scss">
+.card_data {
+  p {
+    margin-bottom: initial;
+  }
+}
 </style>
 
 <script lang="ts">

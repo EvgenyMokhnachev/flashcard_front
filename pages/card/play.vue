@@ -3,21 +3,22 @@
     <div v-if="currentCard">
       <v-card elevation="2" tile class="mb-4">
         <v-card-title>Вопрос</v-card-title>
-        <v-card-text class="card_q_a_a_text" style="">{{ currentCard.frontSide }}</v-card-text>
+        <v-card-text class="card_data card_q_a_a_text" v-html="currentCard.frontSide" />
       </v-card>
 
       <v-card elevation="2" tile class="mb-4" v-if="showAnswer">
         <v-card-title>Ответ</v-card-title>
-        <v-card-text class="card_q_a_a_text">{{ currentCard.backSide }}</v-card-text>
+        <v-card-text class="card_data card_q_a_a_text" v-html="currentCard.backSide" />
       </v-card>
     </div>
 
     <v-footer fixed app>
       <v-container>
         <div class="cards_manage_panel mb-4">
-          <v-btn v-on:click="onClickPrev">Назад</v-btn>
-          <v-btn color="accent" v-on:click="onClickShowAnswer">Показать</v-btn>
-          <v-btn v-on:click="onClickNext">Вперед</v-btn>
+          <v-btn v-on:click="onClickPrev" icon x-large><v-icon>mdi-arrow-left-circle</v-icon></v-btn>
+          <v-btn color="primary" v-on:click="onClickShake" icon x-large><v-icon>mdi-file-arrow-left-right-outline</v-icon></v-btn>
+          <v-btn color="primary" v-on:click="onClickShowAnswer" icon x-large><v-icon>mdi-eye-outline</v-icon></v-btn>
+          <v-btn v-on:click="onClickNext"icon x-large><v-icon>mdi-arrow-right-circle</v-icon></v-btn>
         </div>
 
         <div class="cards_manage_panel">
@@ -35,7 +36,13 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+.card_data {
+  p {
+    margin-bottom: initial;
+  }
+}
+
 .cards_manage_panel {
   display: flex;
   flex-direction: row;
@@ -91,8 +98,29 @@ export default defineComponent({
       this.currentCard = this.cards[this.currentCardIndex];
     },
 
+    random(min: number, max: number): number {
+      return min + Math.round((max-min) * Math.random());
+    },
+
+    onClickShake() {
+      if (!this.cards || !this.cards.length) return;
+      let shakenCards = [];
+      let originalCards = [...this.cards];
+      const originalCardsLength = originalCards.length;
+      while (shakenCards.length != originalCardsLength) {
+        let indexOfCard = this.random(0, originalCards.length - 1);
+        shakenCards.push(originalCards[indexOfCard]);
+        originalCards.splice(indexOfCard, 1);
+      }
+
+      this.showAnswer = false;
+      this.cards = shakenCards;
+      this.currentCardIndex = 0;
+      this.currentCard = this.cards[this.currentCardIndex];
+    },
+
     onClickShowAnswer() {
-      this.showAnswer = true;
+      this.showAnswer = !this.showAnswer;
     },
 
     onClickPrev() {

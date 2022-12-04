@@ -8,35 +8,40 @@
       </v-card-text>
     </v-card>
 
-    <v-card elevation="2" tile class="mb-4">
-      <v-card-title>Лицевая сторона</v-card-title>
-      <v-card-text>
-        <v-form>
-          <v-textarea solo v-model="frontSideValue" label="Введите вопрос" required />
-        </v-form>
-      </v-card-text>
-    </v-card>
+    <Wysiwyg placeholder="Лицевая сторона" v-model="frontSideValue" class="mb-4" />
 
-    <v-card elevation="2" tile class="mb-4">
-      <v-card-title>Обратная сторона</v-card-title>
-      <v-card-text>
-        <v-form>
-          <v-textarea solo v-model="backSideValue" label="Введите ответ" required />
-        </v-form>
-      </v-card-text>
-    </v-card>
+    <Wysiwyg placeholder="Обратная сторона" v-model="backSideValue" class="mb-4" />
+
+<!--    <v-card elevation="2" tile class="mb-4">-->
+<!--      <v-card-title>Лицевая сторона</v-card-title>-->
+<!--      <v-card-text>-->
+<!--        <v-form>-->
+<!--          <v-textarea solo v-model="frontSideValue" label="Введите вопрос" required />-->
+<!--        </v-form>-->
+<!--      </v-card-text>-->
+<!--    </v-card>-->
+
+<!--    <v-card elevation="2" tile class="mb-4">-->
+<!--      <v-card-title>Обратная сторона</v-card-title>-->
+<!--      <v-card-text>-->
+<!--        <v-form>-->
+<!--          <v-textarea solo v-model="backSideValue" label="Введите ответ" required />-->
+<!--        </v-form>-->
+<!--      </v-card-text>-->
+<!--    </v-card>-->
   </div>
 </template>
 
 <script>
+import {defineComponent} from "vue";
 import FoldersSelect from "../components/FoldersSelect";
 import Folder from "../repositories/folders/Folder";
-import {defineComponent} from "vue";
+import Wysiwyg from "../components/Wysiwyg.vue";
 
 export default defineComponent({
   components: {
-    FoldersSelect
-
+    FoldersSelect,
+    Wysiwyg
   },
 
   props: {

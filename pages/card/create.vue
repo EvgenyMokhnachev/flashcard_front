@@ -6,8 +6,12 @@
                 :pre-selected-folder-id="getFolderIdFromQuery()"
     />
 
-    <v-btn block color="primary" class="mb-4" v-on:click="onClickCreate">Создать</v-btn>
-    <v-btn block v-on:click="onClickBack">Назад</v-btn>
+    <v-footer fixed>
+      <div class="d-flex justify-space-between">
+        <v-btn tile block v-on:click="onClickBack" >Назад</v-btn>
+        <v-btn tile block v-on:click="onClickCreate" color="primary">Создать</v-btn>
+      </div>
+    </v-footer>
   </div>
 </template>
 

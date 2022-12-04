@@ -4,7 +4,9 @@
     <v-card-text>
       <FolderManage :folder-name="folderName" @update:folder-name="(newVal) => this.folderName = newVal"
                     :folder="parentFolder" @update:folder="(newVal) => this.parentFolder = newVal"
-                    :pre-selected-folder-id="getParentFolderIdFromQuery()" />
+                    :pre-selected-folder-id="getParentFolderIdFromQuery()"
+                    class="mb-4"
+      />
 
       <div class="d-flex justify-space-between">
         <v-btn @click="onClickBack">Назад</v-btn>

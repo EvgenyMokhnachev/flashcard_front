@@ -1,4 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
+// import { TiptapVuetifyPlugin } from 'tiptap-vuetify';
+//
+// // don't forget to import CSS styles
+// import 'tiptap-vuetify/dist/main.css'
+// // Vuetify's CSS styles
+// import 'vuetify/dist/vuetify.min.css'
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -28,6 +34,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/TiptapVuetify', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -47,6 +54,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/vuetify'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -87,5 +95,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ['vuetify/lib', "tiptap-vuetify"]
   }
 }
