@@ -6,14 +6,22 @@
                 :pre-selected-folder-id="getFolderIdFromQuery()"
     />
 
-    <v-footer fixed>
-      <div class="d-flex justify-space-between">
-        <v-btn tile block v-on:click="onClickBack" >Назад</v-btn>
-        <v-btn tile block v-on:click="onClickCreate" color="primary">Создать</v-btn>
-      </div>
+    <v-footer absolute>
+      <v-container class="footer_buttons_block">
+        <v-btn v-on:click="onClickBack">Назад</v-btn>
+        <v-btn v-on:click="onClickCreate" color="primary">Создать</v-btn>
+      </v-container>
     </v-footer>
   </div>
 </template>
+
+<style lang="scss">
+.footer_buttons_block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+</style>
 
 <script>
 import cardsApi from "../../repositories/cards/CardsApi";
