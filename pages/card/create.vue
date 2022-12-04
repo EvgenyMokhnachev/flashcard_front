@@ -6,7 +6,7 @@
                 :pre-selected-folder-id="getFolderIdFromQuery()"
     />
 
-    <v-footer absolute>
+    <v-footer fixed app>
       <v-container class="footer_buttons_block">
         <v-btn v-on:click="onClickBack">Назад</v-btn>
         <v-btn v-on:click="onClickCreate" color="primary">Создать</v-btn>
