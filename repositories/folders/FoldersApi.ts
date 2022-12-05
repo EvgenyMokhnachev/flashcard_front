@@ -4,6 +4,7 @@ import FoldersFilter from "~/repositories/folders/FoldersFilter";
 import Folder from "~/repositories/folders/Folder";
 import FolderCreateRequest from "~/repositories/folders/FolderCreateRequest";
 import FolderTree from "~/repositories/folders/FolderTree";
+import config from "~/config/config";
 
 class FoldersApi extends BaseApiRepository {
 
@@ -18,16 +19,16 @@ class FoldersApi extends BaseApiRepository {
   }
 
   public async get(filter?: FoldersFilter): Promise<PaginationResponse<Folder>> {
-    return new PaginationResponse(await this.POST("https://api-flashcards.mokhnachev.org/folders/get", filter));
+    return new PaginationResponse(await this.POST(config.getApiUrl() + "/folders/get", filter));
   }
 
   public async tree(filter?: FoldersFilter): Promise<PaginationResponse<FolderTree>> {
-    return new PaginationResponse(await this.POST("https://api-flashcards.mokhnachev.org/folders/get/tree", filter));
+    return new PaginationResponse(await this.POST(config.getApiUrl() + "/folders/get/tree", filter));
   }
 
   public async create(createData: FolderCreateRequest): Promise<Folder> {
     try {
-      let result = await this.POST("https://api-flashcards.mokhnachev.org/folders/create", createData);
+      let result = await this.POST(config.getApiUrl() + "/folders/create", createData);
       this.doFoldersCRUDCallbacks();
       return result;
     } catch (e) {
@@ -37,7 +38,7 @@ class FoldersApi extends BaseApiRepository {
 
   public async delete(id?: number): Promise<boolean> {
     try {
-      let result = await this.POST("https://api-flashcards.mokhnachev.org/folders/delete", {folderId: id});
+      let result = await this.POST(config.getApiUrl() + "/folders/delete", {folderId: id});
       this.doFoldersCRUDCallbacks();
       return result.success;
     } catch (e) {
@@ -47,7 +48,7 @@ class FoldersApi extends BaseApiRepository {
 
   public async update(folder: Folder): Promise<Folder> {
     try {
-      let result = await this.POST("https://api-flashcards.mokhnachev.org/folders/update", folder);
+      let result = await this.POST(config.getApiUrl() + "/folders/update", folder);
       this.doFoldersCRUDCallbacks();
       return result;
     } catch (e) {

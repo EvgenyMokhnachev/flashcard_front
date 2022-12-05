@@ -3,7 +3,12 @@
 <!--    <div>Cards list</div>-->
 <!--    <div>Folder: {{folder}}</div>-->
     <v-card class="mb-4" v-for="(card, i) in cards" :key="i" :to="'/card/update/' + card.id">
-      <v-card-text style="white-space: pre-wrap;" v-html="card.frontSide" class="card_data" />
+      <div style="display: flex; justify-content: space-between;">
+        <v-card-text style="white-space: pre-wrap;" v-html="card.frontSide" class="card_data" />
+        <v-icon v-if="card.difficult === CardDifficultType.EASY" class="mr-2" color="green">mdi-head-check</v-icon>
+        <v-icon v-if="card.difficult === CardDifficultType.DONT_SURE" class="mr-2" color="amber">mdi-head-dots-horizontal</v-icon>
+        <v-icon v-if="card.difficult === CardDifficultType.DONT_KNOW" class="mr-2" color="red">mdi-head-remove</v-icon>
+      </div>
     </v-card>
   </div>
 </template>
@@ -22,6 +27,7 @@ import CardsFilter from "../repositories/cards/CardsFilter";
 import Vue from "vue";
 
 import {defineComponent} from "vue";
+import CardDifficultType from "~/services/CardDifficultType";
 
 export default defineComponent({
 
@@ -33,6 +39,9 @@ export default defineComponent({
   },
 
   computed: {
+    CardDifficultType() {
+      return CardDifficultType;
+    }
   },
 
   data() {

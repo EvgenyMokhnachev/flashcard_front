@@ -3,11 +3,12 @@ import CardsFilter from "~/repositories/cards/CardsFilter";
 import Card from "~/repositories/cards/Card";
 import CardCreateRequest from "~/repositories/cards/CardCreateRequest";
 import PaginationResponse from "~/repositories/PaginationResponse";
+import config from "~/config/config";
 
 class CardsApi extends BaseApiRepository {
 
   public async get(filter?: CardsFilter): Promise<PaginationResponse<Card>> {
-    return await this.POST("https://api-flashcards.mokhnachev.org/cards/get", filter);
+    return await this.POST(config.getApiUrl() + "/cards/get", filter);
   }
 
   public async getFirst(filter?: CardsFilter): Promise<Card | undefined> {
@@ -22,15 +23,15 @@ class CardsApi extends BaseApiRepository {
   }
 
   public async create(cardCreateData: CardCreateRequest): Promise<Card> {
-    return await this.POST("https://api-flashcards.mokhnachev.org/cards/create", cardCreateData);
+    return await this.POST(config.getApiUrl() + "/cards/create", cardCreateData);
   }
 
   public async update(card: Card): Promise<Card> {
-    return await this.POST("https://api-flashcards.mokhnachev.org/cards/update", card);
+    return await this.POST(config.getApiUrl() + "/cards/update", card);
   }
 
   public async delete(id: number): Promise<undefined> {
-    return await this.POST("https://api-flashcards.mokhnachev.org/cards/delete", {id});
+    return await this.POST(config.getApiUrl() + "/cards/delete", {id});
   }
 
 }
