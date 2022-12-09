@@ -22,6 +22,7 @@ import authService from "../services/AuthService";
 import Vue from "vue";
 
 import {defineComponent} from "vue";
+import alertsService, {Alert} from "~/services/AlertsService";
 
 export default defineComponent({
   layout: 'auth',
@@ -44,8 +45,10 @@ export default defineComponent({
 
         if (authService.isAuthenticated) {
           this.$router.push("/");
+          alertsService.addAlert(new Alert('success', 'Добро пожаловать!'));
         }
       } catch (e) {
+        alertsService.addAlert(new Alert('error', e.message));
         console.error(e);
       }
     }

@@ -1,7 +1,6 @@
 <template>
   <div>
-<!--    <div>Cards list</div>-->
-<!--    <div>Folder: {{folder}}</div>-->
+    <v-subheader class="" v-if="!cards || !cards.length">Еще нет созданных карточек</v-subheader>
     <v-card class="mb-4" v-for="(card, i) in cards" :key="i" :to="'/card/update/' + card.id">
       <div style="display: flex; justify-content: space-between;">
         <v-card-text style="white-space: pre-wrap;" v-html="card.frontSide" class="card_data" />

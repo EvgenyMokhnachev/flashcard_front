@@ -1,19 +1,15 @@
 <template>
-  <div class="cardIdPage">
+  <div class="card_update_page_component">
+    <div class="text-h6 mb-4">
+      Редактирование карточки
+    </div>
+
     <CardManage :front-side="card.frontSide" @update:front-side="newVal => this.card.frontSide = newVal"
                 :back-side="card.backSide" @update:back-side="newVal => this.card.backSide = newVal"
                 @update:folder="newVal => this.card.folderId = newVal ? newVal.id : undefined"
                 :pre-selected-folder-id="card.folderId"
                 class="mb-6"
     />
-
-    <v-footer fixed app>
-      <v-container class="footer_buttons_block">
-        <v-btn v-on:click="onClickBack">Назад</v-btn>
-        <v-btn color="error" v-on:click="() => this.openedDeleteWindow = true">Удалить</v-btn>
-        <v-btn color="primary" v-on:click="onClickSave">Сохранить</v-btn>
-      </v-container>
-    </v-footer>
 
     <DialogYesNot title="Вы уверены, что ходите удалить карточку?"
                   no-btn-title="Нет"
@@ -22,16 +18,28 @@
                   :on-click-yes="onClickAcceptDelete"
                   :opened="openedDeleteWindow"
     />
+
+    <Footer>
+      <template slot="buttons">
+        <v-btn color="secondary" icon large @click="onClickBack">
+          <v-icon>mdi-keyboard-backspace</v-icon>
+        </v-btn>
+
+        <v-btn color="error" icon large @click="() => this.openedDeleteWindow = true">
+          <v-icon>mdi-delete-empty</v-icon>
+        </v-btn>
+
+        <v-btn color="primary" icon large @click="onClickSave">
+          <v-icon>mdi-content-save-check-outline</v-icon>
+        </v-btn>
+      </template>
+    </Footer>
   </div>
 </template>
 
 <style lang="scss">
-.cardIdPage {
-  .footer_buttons_block {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
+.card_update_page_component {
+
 }
 </style>
 
@@ -44,10 +52,13 @@ import Card from "~/repositories/cards/Card";
 import Vue from "vue";
 
 import {defineComponent} from "vue";
+import Footer from "~/components/Footer.vue";
+import alertsService, {Alert} from "~/services/AlertsService";
 
 export default defineComponent({
 
   components: {
+    Footer,
     FoldersSelect,
     CardManage,
     DialogYesNot,
@@ -75,7 +86,9 @@ export default defineComponent({
     async onClickSave() {
       try {
         let card = await cardsApi.update(this.card);
+        alertsService.addAlert(new Alert('success', 'Карточка успешно обновлена'));
       } catch (e) {
+        alertsService.addAlert(new Alert('error', e.message));
         console.error(e);
       }
     },
@@ -88,7 +101,9 @@ export default defineComponent({
       try {
         await cardsApi.delete(this.card.id);
         this.onClickBack();
+        alertsService.addAlert(new Alert('success', 'Карточка успешно удалена'));
       } catch (e) {
+        alertsService.addAlert(new Alert('error', e.message));
         console.error(e);
       }
     }

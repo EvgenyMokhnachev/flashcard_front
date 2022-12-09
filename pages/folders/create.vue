@@ -1,31 +1,29 @@
 <template>
-  <v-card>
-    <v-card-title>Создание раздела</v-card-title>
-    <v-card-text>
-      <FolderManage :folder-name="folderName" @update:folder-name="(newVal) => this.folderName = newVal"
-                    :folder="parentFolder" @update:folder="(newVal) => this.parentFolder = newVal"
-                    :pre-selected-folder-id="getParentFolderIdFromQuery()"
-                    class="mb-4"
-      />
+  <div>
+    <div class="text-h6">Создание раздела</div>
 
-      <div class="d-flex justify-space-between">
-        <v-btn @click="onClickBack">Назад</v-btn>
-        <v-btn @click="onClickCreate" color="primary">Создать</v-btn>
-      </div>
-    </v-card-text>
-  </v-card>
+    <FolderManage :folder-name="folderName" @update:folder-name="(newVal) => this.folderName = newVal"
+                  :folder="parentFolder" @update:folder="(newVal) => this.parentFolder = newVal"
+                  :pre-selected-folder-id="getParentFolderIdFromQuery()"
+                  class="mb-4"
+    />
+
+    <Footer>
+      <template slot="buttons">
+        <v-btn color="secondary" icon large @click="onClickBack">
+          <v-icon>mdi-keyboard-backspace</v-icon>
+        </v-btn>
+
+        <v-btn color="primary" icon large @click="onClickCreate">
+          <v-icon>mdi-folder-plus-outline</v-icon>
+        </v-btn>
+      </template>
+    </Footer>
+  </div>
 </template>
 
 <style lang="scss">
-.parent_folder_select_item {
-  .parent_tree_name {
-    font-size: 12px;
-  }
 
-  .parent_name {
-    font-size: 16px;
-  }
-}
 </style>
 
 <script lang="ts">
@@ -36,9 +34,12 @@ import FolderManage from "~/components/FolderManage.vue";
 import Vue from "vue";
 
 import {defineComponent} from "vue";
+import Footer from "~/components/Footer.vue";
+import alertsService, {Alert} from "~/services/AlertsService";
 
 export default defineComponent({
   components: {
+    Footer,
     FolderManage,
     FoldersSelect
   },
@@ -63,7 +64,7 @@ export default defineComponent({
         }));
         this.$router.push("/folders/" + folder.id);
       } catch (e) {
-        // TODO
+        alertsService.addAlert(new Alert('error', e.message));
         console.error(e);
       }
     },

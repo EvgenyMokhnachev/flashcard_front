@@ -62,6 +62,8 @@
 <!--    <v-footer :absolute="!fixed" app>-->
 <!--      <span>&copy; {{ new Date().getFullYear() }}</span>-->
 <!--    </v-footer>-->
+
+    <Alerts />
   </v-app>
 </template>
 
@@ -70,11 +72,12 @@ import FoldersFilter from "../repositories/folders/FoldersFilter";
 import foldersApi from "../repositories/folders/FoldersApi";
 import authService from "~/services/AuthService";
 import User from "~/repositories/user/User";
+import Alerts from "~/components/Alerts.vue";
 
 export default {
 
   name: 'DefaultLayout',
-
+  components: {Alerts},
   middleware: ['auth'],
 
   data() {

@@ -1,34 +1,12 @@
 <template>
   <div>
-    <v-card elevation="2" tile class="mb-4">
-      <v-card-text>
-        <FoldersSelect label="Раздел карточки" :allow-empty="false"
-                       v-model="selectedFolder" :pre-selected-folder-id="preSelectedFolderId"
-        />
-      </v-card-text>
-    </v-card>
+    <FoldersSelect label="Раздел карточки" :allow-empty="false"
+                   v-model="selectedFolder" :pre-selected-folder-id="preSelectedFolderId"
+    />
 
     <Wysiwyg placeholder="Лицевая сторона" v-model="frontSideValue" class="mb-4" />
 
     <Wysiwyg placeholder="Обратная сторона" v-model="backSideValue" class="mb-4" />
-
-<!--    <v-card elevation="2" tile class="mb-4">-->
-<!--      <v-card-title>Лицевая сторона</v-card-title>-->
-<!--      <v-card-text>-->
-<!--        <v-form>-->
-<!--          <v-textarea solo v-model="frontSideValue" label="Введите вопрос" required />-->
-<!--        </v-form>-->
-<!--      </v-card-text>-->
-<!--    </v-card>-->
-
-<!--    <v-card elevation="2" tile class="mb-4">-->
-<!--      <v-card-title>Обратная сторона</v-card-title>-->
-<!--      <v-card-text>-->
-<!--        <v-form>-->
-<!--          <v-textarea solo v-model="backSideValue" label="Введите ответ" required />-->
-<!--        </v-form>-->
-<!--      </v-card-text>-->
-<!--    </v-card>-->
   </div>
 </template>
 

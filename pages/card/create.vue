@@ -1,25 +1,32 @@
 <template>
-  <div>
+  <div class="card_create_page_component">
+    <div class="text-h6 mb-4">
+      Создание карточки
+    </div>
+
     <CardManage :front-side="frontSide" @update:front-side="newVal => this.frontSide = newVal"
                 :back-side="backSide" @update:back-side="newVal => this.backSide = newVal"
                 :folder="selectedFolder" @update:folder="newVal => this.selectedFolder = newVal"
                 :pre-selected-folder-id="getFolderIdFromQuery()"
     />
 
-    <v-footer fixed app>
-      <v-container class="footer_buttons_block">
-        <v-btn v-on:click="onClickBack">Назад</v-btn>
-        <v-btn v-on:click="onClickCreate" color="primary">Создать</v-btn>
-      </v-container>
-    </v-footer>
+    <Footer>
+      <template slot="buttons">
+        <v-btn color="secondary" icon large @click="onClickBack">
+          <v-icon>mdi-keyboard-backspace</v-icon>
+        </v-btn>
+
+        <v-btn color="primary" icon large @click="onClickCreate">
+          <v-icon>mdi-plus-box-multiple-outline</v-icon>
+        </v-btn>
+      </template>
+    </Footer>
   </div>
 </template>
 
 <style lang="scss">
-.footer_buttons_block {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.card_create_page_component {
+
 }
 </style>
 
@@ -30,10 +37,12 @@ import CardManage from "../../components/CardManage";
 import Vue from "vue";
 
 import {defineComponent} from "vue";
+import Footer from "@/components/Footer";
+import alertsService, {Alert} from "@/services/AlertsService";
 
 export default defineComponent({
-
   components: {
+    Footer,
     CardManage,
     FoldersSelect
 
@@ -61,6 +70,7 @@ export default defineComponent({
         });
         this.onClickBack();
       } catch (e) {
+        alertsService.addAlert(new Alert('error', e.message));
         console.error(e);
       }
     },

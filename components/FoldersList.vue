@@ -2,7 +2,7 @@
   <div>
     <v-card elevation="2" class="mb-4" v-for="(item, i) in items" :key="i" :to="'/folders/' + item.id">
       <v-card-text class="d-flex align-center pa-2">
-        <div><v-icon class="mr-2">mdi-folder</v-icon></div>
+        <div><v-icon class="mr-2">mdi-folder-outline</v-icon></div>
         <div>{{item.name}}</div>
       </v-card-text>
     </v-card>

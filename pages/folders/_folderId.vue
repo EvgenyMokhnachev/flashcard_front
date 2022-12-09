@@ -12,7 +12,7 @@
       <v-card-subtitle class="pa-2 pt-0"><strong>{{ (currentFolder ? currentFolder.name : '') }}</strong></v-card-subtitle>
       <div>
         <v-btn icon :to="'/folders/update/' + (currentFolder ? currentFolder.id : '')">
-          <v-icon>mdi-folder-edit</v-icon>
+          <v-icon>mdi-folder-edit-outline</v-icon>
         </v-btn>
       </div>
     </div>
@@ -22,7 +22,7 @@
     <v-card elevation="2" class="mb-4" :to="'/folders/create?parentId=' + getCurrentFolderId()">
       <v-card-text class="d-flex align-center pa-2">
         <div>
-          <v-icon class="mr-2">mdi-folder-plus</v-icon>
+          <v-icon class="mr-2">mdi-folder-plus-outline</v-icon>
         </div>
         <div>Создать подраздел</div>
       </v-card-text>
@@ -32,58 +32,38 @@
 
     <v-divider class="mb-4"/>
 
-<!--    <div class="d-flex justify-space-around mb-4">-->
-<!--      <v-btn elevation="1" large fab dark color="teal" :to="'/card/create?folderId=' + getCurrentFolderId()">-->
-<!--        <v-icon>mdi-plus-box-multiple-outline</v-icon>-->
-<!--      </v-btn>-->
-
-<!--      <v-btn elevation="1" large fab dark color="indigo" @click="onClickCardPlay">-->
-<!--        <v-icon>mdi-play</v-icon>-->
-<!--      </v-btn>-->
-<!--    </div>-->
-
     <CardsList :filter="cardsFilter"/>
 
-    <v-footer fixed app class="pa-0">
-      <v-container class="bottom_navigation_buttons">
+    <Footer>
+      <template slot="buttons">
         <v-btn dark color="teal" :to="'/card/create?folderId=' + getCurrentFolderId()">
           <v-icon>mdi-plus-box-multiple-outline</v-icon>
         </v-btn>
 
-        <v-btn color="green" class="filter_btn" :class="{'active': isCardDifficultTypeSelected(CardDifficultType.EASY)}" @click="clickOnDifficultTypeFilter(CardDifficultType.EASY)">
+        <v-btn color="green" class="card_filter_btn" :class="{'active': isCardDifficultTypeSelected(CardDifficultType.EASY)}" @click="clickOnDifficultTypeFilter(CardDifficultType.EASY)">
           <v-icon color="blue-grey darken-4">mdi-head-check</v-icon>
         </v-btn>
-        <v-btn color="amber" class="filter_btn" :class="{'active': isCardDifficultTypeSelected(CardDifficultType.DONT_SURE)}" @click="clickOnDifficultTypeFilter(CardDifficultType.DONT_SURE)">
+        <v-btn color="amber" class="card_filter_btn" :class="{'active': isCardDifficultTypeSelected(CardDifficultType.DONT_SURE)}" @click="clickOnDifficultTypeFilter(CardDifficultType.DONT_SURE)">
           <v-icon color="blue-grey darken-4">mdi-head-dots-horizontal</v-icon>
         </v-btn>
-        <v-btn color="red" class="filter_btn" :class="{'active': isCardDifficultTypeSelected(CardDifficultType.DONT_KNOW)}" @click="clickOnDifficultTypeFilter(CardDifficultType.DONT_KNOW)">
+        <v-btn color="red" class="card_filter_btn" :class="{'active': isCardDifficultTypeSelected(CardDifficultType.DONT_KNOW)}" @click="clickOnDifficultTypeFilter(CardDifficultType.DONT_KNOW)">
           <v-icon color="blue-grey darken-4">mdi-head-remove</v-icon>
         </v-btn>
 
         <v-btn dark color="indigo" @click="onClickCardPlay">
           <v-icon>mdi-play</v-icon>
         </v-btn>
-      </v-container>
-    </v-footer>
+      </template>
+    </Footer>
   </div>
 </template>
 
 <style lang="scss">
-.bottom_navigation_buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.card_filter_btn {
+  opacity: 0.65;
 
-  button {
-    flex-grow: 0;
-  }
-
-  .filter_btn {
-    opacity: 0.65;
-
-    &.active {
-      opacity: 1;
-    }
+  &.active {
+    opacity: 1;
   }
 }
 </style>
@@ -100,9 +80,11 @@ import Vue from "vue";
 
 import {defineComponent} from "vue";
 import CardDifficultType, {allCardDifficultTypes} from "~/services/CardDifficultType";
+import Footer from "~/components/Footer.vue";
 
 export default defineComponent({
   components: {
+    Footer,
     FoldersList,
     CardsList
   },

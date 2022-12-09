@@ -1,5 +1,5 @@
 <template>
-  <v-select dense hide-details :label="label || 'Родительский раздел'" :items="items" v-model="selectedItem" item-value="id" return-object>
+  <v-select :label="label || 'Родительский раздел'" :items="items" v-model="selectedItem" item-value="id" return-object>
     <template slot="item" slot-scope="data">
       <div class="parent_folder_select_item">
         <div class="parent_tree_name" v-if="getFolderTreeName(data.item)">
@@ -26,6 +26,10 @@
 
 <style lang="scss">
 .parent_folder_select_item {
+  max-width: 99.99%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
   .parent_tree_name {
     font-size: 12px;
   }

@@ -6,7 +6,6 @@
 import {defineComponent} from "vue";
 import {
   TiptapVuetify,
-  Heading,
   Bold,
   Italic,
   Underline,
@@ -27,8 +26,7 @@ export default defineComponent({
   },
 
   data: () => ({
-    extensions: [History, Code, Underline, Bold, Italic, ListItem, OrderedList,
-      [Heading, {options: {levels: [3]}}], HorizontalRule, HardBreak
+    extensions: [History, Code, Underline, Bold, Italic, ListItem, OrderedList, HorizontalRule, HardBreak
     ],
     content: ''
   }),
