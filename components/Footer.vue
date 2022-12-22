@@ -45,7 +45,7 @@ export default defineComponent({
     width: 100%;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    margin-bottom: -10px;
+    margin-bottom: -20px;
     z-index: 2;
     position: relative;
     background-color: inherit;
@@ -55,7 +55,7 @@ export default defineComponent({
     position: relative;
     background: black;
     width: 100%;
-    height: 20px;
+    height: 40px;
     z-index: 1;
   }
 
