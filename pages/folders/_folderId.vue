@@ -34,39 +34,9 @@
 
     <CardsList :filter="cardsFilter"/>
 
-    <Footer>
-      <template slot="buttons">
-        <v-btn dark color="teal" :to="'/card/create?folderId=' + getCurrentFolderId()">
-          <v-icon>mdi-plus-box-multiple-outline</v-icon>
-        </v-btn>
-
-        <v-btn color="green" class="card_filter_btn" :class="{'active': isCardDifficultTypeSelected(CardDifficultType.EASY)}" @click="clickOnDifficultTypeFilter(CardDifficultType.EASY)">
-          <v-icon color="blue-grey darken-4">mdi-head-check</v-icon>
-        </v-btn>
-        <v-btn color="amber" class="card_filter_btn" :class="{'active': isCardDifficultTypeSelected(CardDifficultType.DONT_SURE)}" @click="clickOnDifficultTypeFilter(CardDifficultType.DONT_SURE)">
-          <v-icon color="blue-grey darken-4">mdi-head-dots-horizontal</v-icon>
-        </v-btn>
-        <v-btn color="red" class="card_filter_btn" :class="{'active': isCardDifficultTypeSelected(CardDifficultType.DONT_KNOW)}" @click="clickOnDifficultTypeFilter(CardDifficultType.DONT_KNOW)">
-          <v-icon color="blue-grey darken-4">mdi-head-remove</v-icon>
-        </v-btn>
-
-        <v-btn dark color="indigo" @click="onClickCardPlay">
-          <v-icon>mdi-play</v-icon>
-        </v-btn>
-      </template>
-    </Footer>
+    <CardsListActionsFooter :cards-filter="cardsFilter" @change="onCardsFilterChange" />
   </div>
 </template>
-
-<style lang="scss">
-.card_filter_btn {
-  opacity: 0.65;
-
-  &.active {
-    opacity: 1;
-  }
-}
-</style>
 
 <script lang="ts">
 import CardsList from "../../components/CardsList.vue";
@@ -76,17 +46,16 @@ import FoldersList from "~/components/FoldersList.vue";
 import FoldersFilter from "~/repositories/folders/FoldersFilter";
 import foldersApi from "~/repositories/folders/FoldersApi";
 import FolderTree from "~/repositories/folders/FolderTree";
-import Vue from "vue";
 
 import {defineComponent} from "vue";
-import CardDifficultType, {allCardDifficultTypes} from "~/services/CardDifficultType";
-import Footer from "~/components/Footer.vue";
+import {getAllCardDifficultTypes} from "~/services/CardDifficultType";
+import CardsListActionsFooter from "~/components/CardsListActionsFooter.vue";
 
 export default defineComponent({
   components: {
-    Footer,
     FoldersList,
-    CardsList
+    CardsList,
+    CardsListActionsFooter,
   },
 
   data() {
@@ -109,13 +78,14 @@ export default defineComponent({
         disabled: true
       })
       return result;
-    },
-    CardDifficultType() {
-      return CardDifficultType;
     }
   },
 
   methods: {
+    onCardsFilterChange(filter) {
+      this.cardsFilter = filter;
+    },
+
     getFolderTreeToRoot(folder?: FolderTree, treeItems?: FolderTree[]): FolderTree[] {
       let treeItemsInit: FolderTree[] = treeItems ? [...treeItems] : [];
 
@@ -133,18 +103,6 @@ export default defineComponent({
       return;
     },
 
-    onClickCardPlay() {
-      this.$router.push('/card/play?filter=' + this.getCardsFilterUrl());
-    },
-
-    getCardsFilterUrl(): string {
-      try {
-        return encodeURI(JSON.stringify(this.cardsFilter));
-      } catch (e) {
-        return "";
-      }
-    },
-
     async fetchCurrentFolder() {
       if (this.getCurrentFolderId() !== undefined) {
         let currentFolder: FolderTree | undefined = (await foldersApi.tree({
@@ -156,21 +114,6 @@ export default defineComponent({
         }
       }
     },
-
-    isCardDifficultTypeSelected(difficultType: CardDifficultType): boolean {
-      if (!this.cardsFilter || !this.cardsFilter.difficultTypes) return false;
-      return this.cardsFilter.difficultTypes.indexOf(difficultType) > -1;
-    },
-
-    clickOnDifficultTypeFilter(difficultType: CardDifficultType) {
-      let alreadySelected = this.isCardDifficultTypeSelected(difficultType);
-      if (alreadySelected) {
-        this.cardsFilter.difficultTypes.splice(this.cardsFilter.difficultTypes.indexOf(difficultType), 1);
-      } else {
-        this.cardsFilter.difficultTypes.push(difficultType);
-      }
-      this.cardsFilter = new CardsFilter(this.cardsFilter);
-    }
   },
 
   created() {
@@ -183,7 +126,7 @@ export default defineComponent({
     this.cardsFilter = new CardsFilter({
       userIds: [authService.getUserId()],
       folderIds: [this.getCurrentFolderId()],
-      difficultTypes: allCardDifficultTypes
+      difficultTypes: getAllCardDifficultTypes()
     });
     this.foldersFilter = new FoldersFilter({
       userIds: [authService.getUserId()],

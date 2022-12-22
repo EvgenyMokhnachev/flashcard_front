@@ -12,54 +12,59 @@
       </v-card>
     </div>
 
-    <v-footer fixed app class="pa-0">
-      <v-container>
-        <div class="cards_counter_block">
-          {{ currentCardIndex + 1 }} / {{ cards.length }}
-        </div>
+    <Footer>
+      <template slot="custom">
+        <v-container>
+          <div class="cards_counter_block">
+            {{ currentCardIndex + 1 }} / {{ cards.length }}
+          </div>
 
-        <div class="cards_manage_panel mb-4">
-          <v-btn v-on:click="onClickPrev" icon x-large><v-icon x-large>mdi-arrow-left-circle</v-icon></v-btn>
-          <v-btn color="primary" v-on:click="() => areYouSureToShakeDialog = true" icon x-large><v-icon x-large>mdi-file-arrow-left-right-outline</v-icon></v-btn>
-          <v-btn color="primary" v-on:click="onClickShowAnswer" icon x-large><v-icon x-large>mdi-eye-outline</v-icon></v-btn>
-          <v-btn v-on:click="onClickNext" icon x-large><v-icon x-large>mdi-arrow-right-circle</v-icon></v-btn>
-        </div>
+          <div class="cards_manage_panel mb-4">
+            <v-btn v-on:click="onClickPrev" icon x-large><v-icon x-large>mdi-arrow-left-circle</v-icon></v-btn>
+            <v-btn color="primary" v-on:click="() => areYouSureToShakeDialog = true" icon x-large><v-icon x-large>mdi-file-arrow-left-right-outline</v-icon></v-btn>
+            <v-btn color="primary" v-on:click="onClickShowAnswer" icon x-large><v-icon x-large>mdi-eye-outline</v-icon></v-btn>
+            <v-btn v-on:click="onClickNext" icon x-large><v-icon x-large>mdi-arrow-right-circle</v-icon></v-btn>
+          </div>
 
-        <div class="difficult_level_chooser_block mb-4" v-if="currentCard">
-          <v-btn color="green" :class="{'active': currentCard.difficult === CardDifficultType.EASY}" @click="onClickChangeDifficultType(CardDifficultType.EASY)">
-            <v-icon color="blue-grey darken-4" v-if="currentCard.difficult === CardDifficultType.EASY">mdi-head-check</v-icon>
-            <v-icon color="blue-grey darken-4" v-else>mdi-head-check-outline</v-icon>
-          </v-btn>
-          <v-btn color="amber" :class="{'active': currentCard.difficult === CardDifficultType.DONT_SURE}" @click="onClickChangeDifficultType(CardDifficultType.DONT_SURE)">
-            <v-icon color="blue-grey darken-4" v-if="currentCard.difficult === CardDifficultType.DONT_SURE">mdi-head-dots-horizontal</v-icon>
-            <v-icon color="blue-grey darken-4" v-else>mdi-head-dots-horizontal-outline</v-icon>
-          </v-btn>
-          <v-btn color="red" :class="{'active': currentCard.difficult === CardDifficultType.DONT_KNOW}" @click="onClickChangeDifficultType(CardDifficultType.DONT_KNOW)">
-            <v-icon color="blue-grey darken-4" v-if="currentCard.difficult === CardDifficultType.DONT_KNOW">mdi-head-remove</v-icon>
-            <v-icon color="blue-grey darken-4" v-else>mdi-head-remove-outline</v-icon>
-          </v-btn>
-        </div>
+          <div class="difficult_level_chooser_block mb-4" v-if="currentCard">
+            <v-btn color="green" :class="{'active': currentCard.difficult === CardDifficultType.EASY}" @click="onClickChangeDifficultType(CardDifficultType.EASY)">
+              <v-icon color="blue-grey darken-4" v-if="currentCard.difficult === CardDifficultType.EASY">mdi-head-check</v-icon>
+              <v-icon color="blue-grey darken-4" v-else>mdi-head-check-outline</v-icon>
+            </v-btn>
+            <v-btn color="amber" :class="{'active': currentCard.difficult === CardDifficultType.DONT_SURE}" @click="onClickChangeDifficultType(CardDifficultType.DONT_SURE)">
+              <v-icon color="blue-grey darken-4" v-if="currentCard.difficult === CardDifficultType.DONT_SURE">mdi-head-dots-horizontal</v-icon>
+              <v-icon color="blue-grey darken-4" v-else>mdi-head-dots-horizontal-outline</v-icon>
+            </v-btn>
+            <v-btn color="red" :class="{'active': currentCard.difficult === CardDifficultType.DONT_KNOW}" @click="onClickChangeDifficultType(CardDifficultType.DONT_KNOW)">
+              <v-icon color="blue-grey darken-4" v-if="currentCard.difficult === CardDifficultType.DONT_KNOW">mdi-head-remove</v-icon>
+              <v-icon color="blue-grey darken-4" v-else>mdi-head-remove-outline</v-icon>
+            </v-btn>
+          </div>
 
-        <div class="cards_manage_panel">
-          <DialogYesNot title="Вы уверены, что хотите завершить попытку?"
+          <div class="cards_manage_panel">
+            <DialogYesNot title="Вы уверены, что хотите завершить попытку?"
+                          yes-btn-title="Да"
+                          :on-click-yes="onClickFinish"
+                          no-btn-title="Нет"
+                          :on-click-no="() => {this.areYouSureToFinishDialog = false}"
+                          :opened="areYouSureToFinishDialog"
+            />
+            <v-btn block small color="secondary" @click="areYouSureToFinishDialog = true">Завершить</v-btn>
+          </div>
+
+          <DialogYesNot title="Вы уверены, что хотите перемешать колоду?"
                         yes-btn-title="Да"
-                        :on-click-yes="onClickFinish"
+                        :on-click-yes="onClickShake"
                         no-btn-title="Нет"
-                        :on-click-no="() => {this.areYouSureToFinishDialog = false}"
-                        :opened="areYouSureToFinishDialog"
+                        :on-click-no="() => {this.areYouSureToShakeDialog = false}"
+                        :opened="areYouSureToShakeDialog"
           />
-          <v-btn block small color="secondary" @click="areYouSureToFinishDialog = true">Завершить</v-btn>
-        </div>
-
-        <DialogYesNot title="Вы уверены, что хотите перемешать колоду?"
-                      yes-btn-title="Да"
-                      :on-click-yes="onClickShake"
-                      no-btn-title="Нет"
-                      :on-click-no="() => {this.areYouSureToShakeDialog = false}"
-                      :opened="areYouSureToShakeDialog"
-        />
-      </v-container>
-    </v-footer>
+        </v-container>
+      </template>
+    </Footer>
+<!--    <v-footer fixed app class="pa-0">-->
+<!--      -->
+<!--    </v-footer>-->
   </div>
 </template>
 
@@ -118,10 +123,11 @@ import cardsApi from "~/repositories/cards/CardsApi";
 import CardsFilter from "~/repositories/cards/CardsFilter";
 import DialogYesNot from "~/components/DialogYesNot.vue";
 import CardDifficultType from "~/services/CardDifficultType";
+import Footer from "~/components/Footer.vue";
 
 export default defineComponent({
 
-  components: {DialogYesNot},
+  components: {Footer, DialogYesNot},
 
   data() {
     return {

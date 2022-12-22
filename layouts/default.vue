@@ -26,6 +26,18 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item to="/card/list" router exact>
+          <v-list-item-action class="mr-3">
+            <v-icon>mdi-view-dashboard</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>
+              Все карточки
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item to="/folders/create" router exact>
           <v-list-item-action class="mr-3">
             <v-icon>mdi-folder-plus-outline</v-icon>
