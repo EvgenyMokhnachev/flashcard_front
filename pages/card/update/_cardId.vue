@@ -4,11 +4,12 @@
       Редактирование карточки
     </div>
 
-    <CardManage :front-side="card.frontSide" @update:front-side="newVal => this.card.frontSide = newVal"
+    <CardManage class="mb-6"
+                :front-side="card.frontSide" @update:front-side="newVal => this.card.frontSide = newVal"
                 :back-side="card.backSide" @update:back-side="newVal => this.card.backSide = newVal"
+                :bookmarked="card.bookmarked" @update:bookmarked="newVal => this.card.bookmarked = newVal"
                 @update:folder="newVal => this.card.folderId = newVal ? newVal.id : undefined"
                 :pre-selected-folder-id="card.folderId"
-                class="mb-6"
     />
 
     <DialogYesNot title="Вы уверены, что ходите удалить карточку?"

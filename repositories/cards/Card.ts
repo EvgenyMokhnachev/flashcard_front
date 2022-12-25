@@ -7,6 +7,7 @@ export default class Card {
   frontSide?: string;
   backSide?: string;
   difficult?: CardDifficultType;
+  bookmarked?: boolean;
 
   constructor(card?: Card) {
     this.id = card?.id;
@@ -15,5 +16,6 @@ export default class Card {
     this.frontSide = card?.frontSide;
     this.backSide = card?.backSide;
     this.difficult = card?.difficult;
+    this.bookmarked = card?.bookmarked;
   }
 }

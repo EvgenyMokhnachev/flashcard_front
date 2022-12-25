@@ -4,6 +4,7 @@
     <v-card class="mb-4" v-for="(card, i) in cards" :key="i" :to="'/card/update/' + card.id">
       <div style="display: flex; justify-content: space-between;">
         <v-card-text style="white-space: pre-wrap;" v-html="card.frontSide" class="card_data" />
+        <v-icon class="mr-2" color="red" v-if="card.bookmarked">mdi-bookmark</v-icon>
         <v-icon v-if="card.difficult === CardDifficultType.EASY" class="mr-2" color="green">mdi-head-check</v-icon>
         <v-icon v-if="card.difficult === CardDifficultType.DONT_SURE" class="mr-2" color="amber">mdi-head-dots-horizontal</v-icon>
         <v-icon v-if="card.difficult === CardDifficultType.DONT_KNOW" class="mr-2" color="red">mdi-head-remove</v-icon>

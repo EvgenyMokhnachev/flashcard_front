@@ -14,6 +14,18 @@
                              v-model="cardsDifficultTypes"
         />
 
+        <v-btn-toggle v-model="bookmarkedData" color="primary" group dense>
+          <v-btn :value="true" small>
+            <v-icon color="red">mdi-bookmark</v-icon>
+            В закладках
+          </v-btn>
+
+          <v-btn :value="false" small>
+            <v-icon>mdi-bookmark-outline</v-icon>
+            Нет в закладках
+          </v-btn>
+        </v-btn-toggle>
+
 <!--        <DatePickerRangeDialog label="Фильтр по дате создания" />-->
       </v-card-text>
 
@@ -61,6 +73,7 @@ export default defineComponent({
 
       preSelectedFoldersIds: [],
       foldersData: [],
+      bookmarkedData: undefined,
 
       cardsDifficultTypes: []
     }
@@ -70,10 +83,9 @@ export default defineComponent({
     filter(filter: CardsFilter) {
       this.filterData = {...(filter || {})}
 
-      // this.foldersData = [];
       this.preSelectedFoldersIds = [...this.filterData.folderIds];
-
       this.cardsDifficultTypes = [...this.filterData.difficultTypes];
+      this.bookmarkedData = this.filterData.bookmarked;
     },
 
     foldersData(newFolders: Folder[]) {
@@ -82,6 +94,10 @@ export default defineComponent({
 
     cardsDifficultTypes(newCardDifficultTypes) {
       this.filterData.difficultTypes = [...newCardDifficultTypes];
+    },
+
+    bookmarkedData(newVal) {
+      this.filterData.bookmarked = newVal;
     }
   },
 

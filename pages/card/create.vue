@@ -8,6 +8,7 @@
                 :back-side="backSide" @update:back-side="newVal => this.backSide = newVal"
                 :folder="selectedFolder" @update:folder="newVal => this.selectedFolder = newVal"
                 :pre-selected-folder-id="getFolderIdFromQuery()"
+                :bookmarked="bookmarked" @update:bookmarked="newVal => this.bookmarked = newVal"
     />
 
     <Footer>
@@ -52,7 +53,8 @@ export default defineComponent({
     return {
       selectedFolder: undefined,
       frontSide: '',
-      backSide: ''
+      backSide: '',
+      bookmarked: false
     }
   },
 
@@ -66,7 +68,8 @@ export default defineComponent({
         let card = await cardsApi.create({
           folderId: this.selectedFolder?.id,
           frontSide: this.frontSide,
-          backSide: this.backSide
+          backSide: this.backSide,
+          bookmarked: this.bookmarked
         });
         this.onClickBack();
       } catch (e) {

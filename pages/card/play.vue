@@ -2,7 +2,10 @@
   <div>
     <div v-if="currentCard">
       <v-card elevation="2" tile class="mb-4">
-        <v-card-title>Вопрос</v-card-title>
+        <v-card-title>
+          Вопрос
+          <CardBookmarkSmallToggleWithUpdate v-model="currentCard" />
+        </v-card-title>
         <v-card-text class="card_data card_q_a_a_text" v-html="currentCard.frontSide" />
       </v-card>
 
@@ -20,10 +23,10 @@
           </div>
 
           <div class="cards_manage_panel mb-4">
-            <v-btn v-on:click="onClickPrev" icon x-large><v-icon x-large>mdi-arrow-left-circle</v-icon></v-btn>
-            <v-btn color="primary" v-on:click="() => areYouSureToShakeDialog = true" icon x-large><v-icon x-large>mdi-file-arrow-left-right-outline</v-icon></v-btn>
-            <v-btn color="primary" v-on:click="onClickShowAnswer" icon x-large><v-icon x-large>mdi-eye-outline</v-icon></v-btn>
-            <v-btn v-on:click="onClickNext" icon x-large><v-icon x-large>mdi-arrow-right-circle</v-icon></v-btn>
+            <v-btn v-on:click="onClickPrev" icon large><v-icon large>mdi-arrow-left-circle</v-icon></v-btn>
+            <v-btn color="primary" v-on:click="() => areYouSureToShakeDialog = true" icon large><v-icon large>mdi-file-arrow-left-right-outline</v-icon></v-btn>
+            <v-btn color="primary" v-on:click="onClickShowAnswer" icon large><v-icon large>mdi-eye-outline</v-icon></v-btn>
+            <v-btn v-on:click="onClickNext" icon large><v-icon large>mdi-arrow-right-circle</v-icon></v-btn>
           </div>
 
           <div class="difficult_level_chooser_block mb-4" v-if="currentCard">
@@ -124,10 +127,11 @@ import CardsFilter from "~/repositories/cards/CardsFilter";
 import DialogYesNot from "~/components/DialogYesNot.vue";
 import CardDifficultType from "~/services/CardDifficultType";
 import Footer from "~/components/Footer.vue";
+import CardBookmarkSmallToggleWithUpdate from "~/components/CardBookmarkSmallToggleWithUpdate.vue";
 
 export default defineComponent({
 
-  components: {Footer, DialogYesNot},
+  components: {CardBookmarkSmallToggleWithUpdate, Footer, DialogYesNot},
 
   data() {
     return {
