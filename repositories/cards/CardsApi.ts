@@ -8,7 +8,7 @@ import config from "~/config/config";
 class CardsApi extends BaseApiRepository {
 
   public async get(filter?: CardsFilter): Promise<PaginationResponse<Card>> {
-    return await this.POST(config.getApiUrl() + "/cards/get", filter);
+    return await this.POST(config.getApiUrl() + "/cards/get", filter ? new CardsFilter(filter) : undefined);
   }
 
   public async getFirst(filter?: CardsFilter): Promise<Card | undefined> {

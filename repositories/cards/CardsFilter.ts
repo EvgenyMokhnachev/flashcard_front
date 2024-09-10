@@ -8,7 +8,7 @@ export default class CardsFilter {
   bookmarked?: boolean | undefined;
 
   constructor(cardsFilter?: CardsFilter) {
-    this.ids = cardsFilter?.ids;
+    this.ids = cardsFilter?.ids ? (cardsFilter?.ids || []).map((id: (string | number)) => parseInt(id + '')).filter(id => !isNaN(id)) : undefined;
     this.userIds = cardsFilter?.userIds;
     this.folderIds = cardsFilter?.folderIds;
     this.difficultTypes = cardsFilter?.difficultTypes;
